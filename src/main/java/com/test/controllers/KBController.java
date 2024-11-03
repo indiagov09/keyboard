@@ -90,20 +90,37 @@ public class KBController {
 	@GetMapping("api/test/all/brands")
 	public ResponseEntity<?> getAllBrands(){
 		Optional<Map<Integer,Car>> optCars =  service.findAllCars();
-		if(optCars.isPresent()) {
-			Map<Integer,Car> mapCars = optCars.get();
-			Set<String> set=new HashSet<String>();
-			List<String> duplicates = mapCars.entrySet().stream().map(e->e.getValue().getBrand()).filter(str->!set.add(str)).toList();
-
-			return new ResponseEntity<>(set,HttpStatus.OK);
-
-		}
-		return new ResponseEntity<>("ERROR",HttpStatus.INTERNAL_SERVER_ERROR);
+		//		if(optCars.isPresent()) {
+		//			Map<Integer,Car> mapCars = optCars.get();
+		//			Set<String> set=new HashSet<String>();
+		//			List<String> duplicates = mapCars.entrySet().stream().map(e->e.getValue().getBrand()).filter(str->!set.add(str)).toList();
+		//
+		//			return new ResponseEntity<>(set,HttpStatus.OK);
+		//
+		//		}
+		
+		
+//		Set<String> duplicates = optCars.map(carMap->{
+//			Set<String> set = new HashSet<String>();
+//			return carMap.entrySet().stream().map(e->e.getValue().getBrand()).filter(str->!set.add(str)).collect(Collectors.toSet());
+//		}).orElseGet(()->testSupplier());
+		
+		
+		return new ResponseEntity<>(optCars.map(carMap->{
+			Set<String> set = new HashSet<String>();
+			return carMap.entrySet().stream().map(e->e.getValue().getBrand()).filter(str->!set.add(str)).collect(Collectors.toSet());
+		}).orElseGet(()->testSupplier()),HttpStatus.OK);
+		
+		//return new ResponseEntity<>("ERROR",HttpStatus.INTERNAL_SERVER_ERROR);
 
 
 	}
 
-
+	private Set<String> testSupplier(){
+		Set<String> set = new HashSet<String>();
+		set.add("no elements");
+		return set;
+	}
 
 	@GetMapping("api/test/all/brands/frequency")
 	public ResponseEntity<?> getAllBrandsFrequency(){
@@ -335,7 +352,7 @@ public class KBController {
 	public int[] testtest4(){
 
 		int[] arr1 = {1,2,3,4,5};
-					  
+
 		IntStream.range(0, arr1.length/2).forEach(i->{
 			int lastIndex = arr1.length-1;
 			int temp = arr1[i];
