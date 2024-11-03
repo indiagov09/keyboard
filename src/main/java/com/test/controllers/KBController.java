@@ -24,7 +24,7 @@ public class KBController {
 	private AllServiceImpl service;
 
 	@GetMapping(value="api/test")
-	public ResponseEntity<?> test(){
+	public  test(){
 		Optional<List<Employee>> allEmployees = service.getAllEmployees();
 		ResponseEntity<?> responseEntity = null;
 		if(allEmployees.isPresent()) {
