@@ -89,6 +89,7 @@ public class KBController {
 
 	@GetMapping("api/test/all/brands")
 	public ResponseEntity<?> getAllBrands(){
+		System.out.println("hello");
 		Optional<Map<Integer,Car>> optCars =  service.findAllCars();
 		//		if(optCars.isPresent()) {
 		//			Map<Integer,Car> mapCars = optCars.get();
