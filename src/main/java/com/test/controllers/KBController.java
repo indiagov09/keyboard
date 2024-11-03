@@ -45,7 +45,7 @@ public class KBController {
 
 
 	@GetMapping(value="api/test/{id}")
-	public  test_id(@PathVariable(name = "id")int id){
+	public ResponseEntity<?> test_id(@PathVariable(name = "id")int id){
 		Optional<Employee> optEmployee = service.getEmployeeById(id);
 		ResponseEntity<?> responseEntity = null;
 
